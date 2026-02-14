@@ -1,5 +1,4 @@
 name: Build the CI job for nodejs application
-
 on:
   push:
     branches:
@@ -8,33 +7,32 @@ on:
     branches:
       - main
 
-jobs:
+
+jobs: 
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v2
         with:
-          node-version: '20' # Recommended to use an active LTS version
-          cache: 'npm'       # Caching dependencies speeds up future runs
+          node-version: '14'
 
       - name: Install dependencies
-        run: npm ci          # 'npm ci' is cleaner for CI environments than 'install'
+        run: npm install
 
       - name: Run tests
         run: npm test
 
-      - name: List files
-        run: ls -R
+      - name: list all the files and folder in build directory
+        run: ls 
 
-      - name: Upload artifacts
+      - name: Upload artifacts check the node js application path 
         uses: actions/upload-artifact@v4
         with:
-          name: nodejs-app-artifacts
-          # Adjust 'path' to your specific build folder if you have one (e.g., ./dist)
-          path: ./ 
-          retention-days: 5
+          name: nodejs-app-=artifacts
+          path: ./
+
+
