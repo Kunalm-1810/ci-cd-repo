@@ -1,4 +1,5 @@
 name: Build the CI job for nodejs application
+
 on:
   push:
     branches:
@@ -7,16 +8,15 @@ on:
     branches:
       - main
 
-
-jobs: 
+jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4 # Updated to latest version
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4 # Updated to latest version
         with:
           node-version: '14'
 
@@ -26,18 +26,16 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: list all the files and folder in build directory
-        run: ls 
+      - name: List build directory
+        run: ls -R # -R shows subdirectories too
 
-      - name: Upload artifacts check the node js application path 
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: nodejs-app-=artifacts
+          name: nodejs-app-artifacts
           path: ./
 
- - name: get the user_name and password from github
-        #run: echo "Username: ${{ vari.USERNAME }} and Password: ${{ secrets.PASSWORD }}"
+      - name: Display Secrets and Variables
         run: |
           echo "Username: ${{ secrets.USER_NAME }}"
-          echo "Password: ${{ variables.PASSWORD }}"
-
+          echo "Password: ${{ vars.PASSWORD }}" 
