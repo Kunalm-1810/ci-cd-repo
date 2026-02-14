@@ -35,4 +35,9 @@ jobs:
           name: nodejs-app-=artifacts
           path: ./
 
+ - name: get the user_name and password from github
+        #run: echo "Username: ${{ vari.USERNAME }} and Password: ${{ secrets.PASSWORD }}"
+        run: |
+          echo "Username: ${{ secrets.USER_NAME }}"
+          echo "Password: ${{ variables.PASSWORD }}"
 
