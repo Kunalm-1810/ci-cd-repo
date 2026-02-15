@@ -35,7 +35,7 @@ jobs:
           name: nodejs-app-artifacts
           path: ./
 
-      - name: Display Secrets and Variables
-        run: |
-          echo "Username: ${{ vars.USER_NAME }}"
-          echo "Password: ${{ secrets.PASSWORD }}" 
+      #- name: Display Secrets and Variables
+       # run: |
+        #  echo "Username: ${{ vars.USER_NAME }}"
+         # echo "Password: ${{ secrets.PASSWORD }}" 

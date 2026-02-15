@@ -1,0 +1,36 @@
+name: Deploying the nodejs application to ec2 instance as runner in aws ap-south-1
+on:
+  workflow_run:
+    workflows: ["Build the CI job for nodejs application"]
+    types:
+      - completed
+
+jobs:
+  deploy: 
+    name: Deploying the nodejs application to ec2 instance as runner in aws ap-south-1
+    runs-on: self-hosted
+    #matrix:
+    #  os: [ubuntu-latest, amazonlinux2]
+    steps:
+      - name: Update the packages 
+        run: sudo apt update -y
+      - name: Install nodejs and npm
+        run: sudo apt install nodejs npm -y
+      - name: list all the files and folder in build directory
+        run: ls        
+      - name: download the artifacts from build job 
+        uses: actions/download-artifact@v4
+        with: 
+          name: nodejs-app-artifacts
+          path: ./nodejs-app-artifacts
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deployment completed
+        run: echo "Deployment completed successfully"
+      # - name: start the node services
+      #   run: |
+      #     cd nodejs-app-artifacts
+      #     npm install
+      #     npm start
+      # - name:  nohup node /home/ubuntu/actions-runner/_work/nodejs-app-nov-2025/nodejs-app-nov-2025/nodejs-app-artifacts/src/index.js &
+      #   run: echo "Node services started successfully"
