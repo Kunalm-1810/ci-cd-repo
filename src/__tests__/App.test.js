@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-const App = () => <h1>Hello, World!</h1>;
+const App = () => <h1>Hello, World! this is CI/CD project</h1>;
 
 describe('App Component', () => {
   test('renders Hello, World! heading', () => {
