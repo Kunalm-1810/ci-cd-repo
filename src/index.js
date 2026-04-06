@@ -26,7 +26,7 @@ const App = () => {
   return (
     <div style={pageStyle}>
       <div style={statusStyle}>
-        <h1>🚀 Jenkins CI/CD Project Integrated with github</h1>
+        <h1>🚀 Jenkins CI/CD Project Integrated with github using webhook</h1>
         <p>Status: <span style={{color: '#4ecca3'}}>Connected via GitHub Webhook</span></p>
         <hr style={{borderColor: '#0f3460'}} />
         <small>Last Deployment: {new Date().toLocaleTimeString()}</small>
