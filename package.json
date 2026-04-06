@@ -14,7 +14,7 @@
     "moduleNameMapper": {
       "\\.(css|less|scss|sass)$": "identity-obj-proxy"
     }
-  }
+  },
   "keywords": ["react", "webpack", "babel"],
   "author": "DevOps Engineer",
   "license": "MIT",
