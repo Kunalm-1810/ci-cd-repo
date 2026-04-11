@@ -1,12 +1,15 @@
 {
-  "name": "new-folder",
+  "name": "@myorg/my-node-app",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"No tests specified yet\" && exit 0" 
+    "test": "mocha --reporter mocha-junit-reporter"
   },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "^11.7.5",
+    "mocha-junit-reporter": "^2.2.1"
+  }
 }

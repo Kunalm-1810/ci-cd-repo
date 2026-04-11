@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    tools{
+    tools {
         maven 'Maven3'
     }
 
@@ -16,27 +16,20 @@ pipeline {
             }
             post {
                 always {
-        	junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+                    junit allowEmptyResults: true, testResults: '**/test-results/*.xml'
                 }
             }
         }
         stage('Deploy') {
-    steps {
-        echo 'Deploying to AWS...'
-        sshagent(['git-jenkins']) { // Ensure 'git-jenkins' contains your EC2 .pem private key
-            script {
-                def remoteServer = 'ec2-user@43.205.231.73'
-                
-                echo "Copying Node.js files to EC2..."
-                // Copy app.js and package.json (and any other files/folders you have)
-                sh "scp -o StrictHostKeyChecking=no app.js package.json ${remoteServer}:/home/ec2-user/"
-
-                echo "Restarting application on EC2..."
-                // Install dependencies on the server and restart
-                sh "ssh -o StrictHostKeyChecking=no ${remoteServer} 'cd /home/ec2-user && npm install && sudo systemctl restart my-app-service'"
-                    }
-                }
+            steps {
+                echo 'Deploying to EC2...'
+                sh '''
+                    cp app.js package.json /home/jenkins/my-app/
+                    cd /home/jenkins/my-app
+                    npm install
+                    pm2 restart my-app || pm2 start app.js --name my-app
+                '''
             }
         }
-   }
+    }
 }
