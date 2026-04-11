@@ -21,18 +21,19 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {
-                echo 'Deploying to AWS...'
-                sshagent(['git-jenkins']) {
-                    script {
-                        // FIX: Use consistent naming (remoteServer)
-                        def remoteServer = 'ec2-user@43.205.231.73'
+    steps {
+        echo 'Deploying to AWS...'
+        sshagent(['git-jenkins']) { // Ensure 'git-jenkins' contains your EC2 .pem private key
+            script {
+                def remoteServer = 'ec2-user@43.205.231.73'
+                
+                echo "Copying Node.js files to EC2..."
+                // Copy app.js and package.json (and any other files/folders you have)
+                sh "scp -o StrictHostKeyChecking=no app.js package.json ${remoteServer}:/home/ec2-user/"
 
-                        echo "Copying file to EC2..."
-                        sh "scp -o StrictHostKeyChecking=no target/*.jar ${remoteServer}:/home/ec2-user/app.jar"
-
-                        echo "Restarting application on EC2..."
-                        sh "ssh -o StrictHostKeyChecking=no ${remoteServer} 'sudo systemctl restart my-app-service'"
+                echo "Restarting application on EC2..."
+                // Install dependencies on the server and restart
+                sh "ssh -o StrictHostKeyChecking=no ${remoteServer} 'cd /home/ec2-user && npm install && sudo systemctl restart my-app-service'"
                     }
                 }
             }
